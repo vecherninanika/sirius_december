@@ -3,10 +3,11 @@ from typing import AsyncIterator
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi_pagination import add_pagination
 
-from webapp.api.auth.router import auth_router
-from webapp.api.crud.ingredient.router import ingredient_router
-from webapp.api.crud.recipe.router import recipe_router
+from webapp.api.user.router import auth_router
+from webapp.api.ingredient.router import ingredient_router
+from webapp.api.recipe.router import recipe_router
 from webapp.metrics import MetricsMiddleware, metrics
 from webapp.on_shutdown import stop_producer
 from webapp.on_startup.kafka import create_producer
@@ -49,5 +50,6 @@ def create_app() -> FastAPI:
 
     setup_middleware(app)
     setup_routers(app)
+    add_pagination(app)
 
     return app

@@ -1,9 +1,10 @@
-from fastapi import Depends, HTTPException
+from fastapi import Depends, HTTPException, Query
 from fastapi.responses import ORJSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
+# from fastapi_pagination import paginate
 
-from webapp.api.crud.recipe.router import recipe_router
+from webapp.api.recipe.router import recipe_router
 from webapp.crud.crud import get_all
 from webapp.crud.get_recipe import get_recipe
 from webapp.db.postgres import get_session
@@ -24,7 +25,7 @@ async def read_recipe(
     if recipe is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
-    return ORJSONResponse({'id': recipe.id, 'title': recipe.title})
+    return ORJSONResponse({'id': recipe.id, 'title': recipe.title, 'likes': recipe.likes})
 
 
 @recipe_router.get(
@@ -36,4 +37,11 @@ async def read_recipes(
 ) -> ORJSONResponse:
     recipes = await get_all(session, Recipe)
 
-    return ORJSONResponse([{'id': recipe.id, 'title': recipe.title} for recipe in recipes])
+    return ORJSONResponse(
+        # paginate(
+            [{'id': recipe.id,
+              'title': recipe.title,
+              'likes': recipe.likes}
+             for recipe in recipes]
+        # )
+    )

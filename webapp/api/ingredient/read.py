@@ -3,7 +3,7 @@ from fastapi.responses import ORJSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
-from webapp.api.crud.ingredient.router import ingredient_router
+from webapp.api.ingredient.router import ingredient_router
 from webapp.crud.crud import get_all
 from webapp.crud.get_ingredient import get_ingredient
 from webapp.db.postgres import get_session

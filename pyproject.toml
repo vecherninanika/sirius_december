@@ -35,6 +35,7 @@ authors = ["Gladkikh Anton"]
 [tool.poetry.dependencies]
 python = "^3.11"
 fastapi = "0.103.1"
+fastapi_pagination = "0.12.22"
 uvicorn = "0.23.1"
 uvloop = "0.17.0"
 pydantic = { extras = ["dotenv"], version = "2.3.0" }
@@ -52,7 +53,7 @@ python-multipart = "0.0.6"
 loguru = "0.7.2"
 starlette-prometheus = "0.9.0"
 starlette-context = "0.3.6"
-miniopy-async = "1.17"
+miniopy-async = "1.19"
 
 [tool.poetry.group.dev.dependencies]
 autoflake = "2.2.0"

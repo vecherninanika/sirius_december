@@ -4,9 +4,9 @@ API_PREFIX = settings.API_PREFIX
 
 URLS = {
     "api": {
-        "auth": {
-            "register": API_PREFIX + "/auth/register",
-            "login": API_PREFIX + "/auth/login",
+        "user": {
+            "register": API_PREFIX + "/user/register",
+            "login": API_PREFIX + "/user/login",
         },
         "user": {"user": API_PREFIX + "/user"},
         "ingredient": {"ingredient": API_PREFIX + "/ingredient"},

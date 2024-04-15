@@ -25,7 +25,7 @@ async def test_register(
     db_session: AsyncSession,
 ) -> None:
     response = await client.post(
-        URLS["api"]["auth"]["register"],
+        URLS["api"]["user"]["register"],
         json={"username": username, "password": password},
     )
     logger.exception(response.json())

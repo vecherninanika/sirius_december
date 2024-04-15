@@ -46,7 +46,7 @@
 #     }
 
 #     response = await client.post(
-#         URLS["api"]["auth"]["login"],
+#         URLS["api"]["user"]["login"],
 #         data={"username": username, "password": password},
 #         headers=headers,
 #     )

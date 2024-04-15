@@ -69,7 +69,7 @@ async def access_token(
     }
 
     response = await client.post(
-        URLS["api"]["v1"]["auth"]["token"],
+        URLS["api"]["v1"]["user"]["token"],
         data={"username": username, "password": password},
         headers=headers,
     )

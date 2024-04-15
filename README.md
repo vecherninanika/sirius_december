@@ -14,6 +14,9 @@
 - Register \
 curl -X POST http://127.0.0.1:8000/auth/register -H "Content-Type: application/json" -d '{"username": "new", "password": "new"}'
 
+NOT FOUND
+whaaaaaat?!
+
 - Login \
 curl -X POST http://127.0.0.1:8000/auth/login -H "Content-Type: application/json" -d '{"username": "new user", "password": "new"}'
 
@@ -25,6 +28,8 @@ curl -X POST http://127.0.0.1:8000/auth/delete_user/1 -H "Authorization: Bearer 
 
 - Update \
 curl -X POST http://127.0.0.1:8000/auth/update_user/1 -H "Content-Type: application/json" -d '{"username": "new", "password": "new"}'
+
+"/code/webapp/crud/crud.py   'NoneType' object is not subscriptable
 
 
 ### Ingredient
@@ -64,3 +69,4 @@ curl -X POST http://127.0.0.1:8000/recipe/delete/1 -H "Content-Type: application
 
 - Read all \
 curl -X GET http://127.0.0.1:8000/recipe/read_all -H "Content-Type: application/json"
+

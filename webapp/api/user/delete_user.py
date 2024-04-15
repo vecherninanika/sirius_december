@@ -3,7 +3,7 @@ from fastapi.responses import ORJSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
-from webapp.api.auth.router import auth_router
+from webapp.api.user.router import auth_router
 from webapp.crud.crud import delete
 from webapp.db.postgres import get_session
 from webapp.models.sirius.user import User

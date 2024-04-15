@@ -3,17 +3,17 @@ from fastapi.responses import ORJSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
-from webapp.api.auth.router import auth_router
+from webapp.api.user.router import auth_router
 from webapp.cache.redis import redis_set
 from webapp.crud.get_user import get_user
 from webapp.db.postgres import get_session
-from webapp.schema.user import UserLogin, UserLoginResponse
+from webapp.schema.user import UserLogin, UserTokenResponse
 from webapp.utils.auth.jwt import jwt_auth
 
 
 @auth_router.post(
     '/login',
-    response_model=UserLoginResponse,
+    response_model=UserTokenResponse,
 )
 async def login(
     body: UserLogin,
@@ -29,6 +29,8 @@ async def login(
 
     return ORJSONResponse(
         {
+            'user_id': user.id,
+            'username': user.username,
             'access_token': token,
         }
     )
