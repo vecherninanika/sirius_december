@@ -27,3 +27,4 @@ async def get_sorted_recipes(session: AsyncSession, recipe_limit: int) \
             .order_by(desc(Recipe.Entry.likes))
             .limit(recipe_limit))
     ).all()
+    # NOTE как может возвращать not found?

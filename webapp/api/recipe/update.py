@@ -18,10 +18,8 @@ async def update_recipe(
     recipe_id: int, body: RecipeField, session: AsyncSession = Depends(get_session)
 ) -> ORJSONResponse:
     updated = await update(session, recipe_id, body, Recipe)
-    updated_id = updated.id
 
-    if updated_id is None:
+    if updated.id is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
 
-    return ORJSONResponse({'id': updated_id, 'title': updated.title, 'likes': updated.likes})
-
+    return ORJSONResponse({'id': updated.id, 'title': updated.title, 'likes': updated.likes})

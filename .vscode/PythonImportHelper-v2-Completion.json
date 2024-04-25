@@ -267,6 +267,15 @@
         "documentation": {}
     },
     {
+        "label": "sqlalchemy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sqlalchemy",
+        "description": "sqlalchemy",
+        "detail": "sqlalchemy",
+        "documentation": {}
+    },
+    {
         "label": "insert",
         "importPath": "sqlalchemy",
         "description": "sqlalchemy",
@@ -292,30 +301,6 @@
     },
     {
         "label": "RowMapping",
-        "importPath": "sqlalchemy",
-        "description": "sqlalchemy",
-        "isExtraImport": true,
-        "detail": "sqlalchemy",
-        "documentation": {}
-    },
-    {
-        "label": "select",
-        "importPath": "sqlalchemy",
-        "description": "sqlalchemy",
-        "isExtraImport": true,
-        "detail": "sqlalchemy",
-        "documentation": {}
-    },
-    {
-        "label": "delete",
-        "importPath": "sqlalchemy",
-        "description": "sqlalchemy",
-        "isExtraImport": true,
-        "detail": "sqlalchemy",
-        "documentation": {}
-    },
-    {
-        "label": "update",
         "importPath": "sqlalchemy",
         "description": "sqlalchemy",
         "isExtraImport": true,
@@ -2721,30 +2706,6 @@
         "documentation": {}
     },
     {
-        "label": "paginate",
-        "importPath": "fastapi_pagination",
-        "description": "fastapi_pagination",
-        "isExtraImport": true,
-        "detail": "fastapi_pagination",
-        "documentation": {}
-    },
-    {
-        "label": "Page",
-        "importPath": "fastapi_pagination",
-        "description": "fastapi_pagination",
-        "isExtraImport": true,
-        "detail": "fastapi_pagination",
-        "documentation": {}
-    },
-    {
-        "label": "add_pagination",
-        "importPath": "fastapi_pagination",
-        "description": "fastapi_pagination",
-        "isExtraImport": true,
-        "detail": "fastapi_pagination",
-        "documentation": {}
-    },
-    {
         "label": "read_ingredient",
         "importPath": "webapp.api.ingredient.read",
         "description": "webapp.api.ingredient.read",
@@ -3127,14 +3088,6 @@
         "description": "sqlalchemy.orm",
         "isExtraImport": true,
         "detail": "sqlalchemy.orm",
-        "documentation": {}
-    },
-    {
-        "label": "paginate",
-        "importPath": "fastapi_pagination.ext.sqlalchemy",
-        "description": "fastapi_pagination.ext.sqlalchemy",
-        "isExtraImport": true,
-        "detail": "fastapi_pagination.ext.sqlalchemy",
         "documentation": {}
     },
     {
@@ -3750,7 +3703,7 @@
         "kind": 5,
         "importPath": "webapp.crud.crud",
         "description": "webapp.crud.crud",
-        "peekOfCode": "ModelT = TypeVar('ModelT', bound=DeclarativeMeta)\n@async_integrations_timer\nasync def get(session: AsyncSession, model_id: Any, model: Type[ModelT]) -> List[ModelT] | None:\n    return (await session.scalars(select(model).where(model.id == model_id))).one_or_none()\n@async_integrations_timer\nasync def get_all(session: AsyncSession, model: Type[ModelT]) -> Page[Row | RowMapping | Any] | None:\n    # return (await session.scalars(select(model))).all()  # сделать пагинацию\n    return await paginate(session, select(model))   # TODO может быть ошибка\n@async_integrations_timer\nasync def create(session: AsyncSession, data: Any, model: ModelT) -> ModelT:",
+        "peekOfCode": "ModelT = TypeVar('ModelT', bound=DeclarativeMeta)\n@async_integrations_timer\nasync def get(session: AsyncSession, model_id: Any, model: Type[ModelT]) -> List[ModelT] | None:\n    return (await session.scalars(sqlalchemy.select(model).where(model.id == model_id))).one_or_none()\n@async_integrations_timer\nasync def get_all(session: AsyncSession, model: Type[ModelT]) -> Row | RowMapping | Any | None:\n    return (await session.scalars(sqlalchemy.select(model))).all()  # сделать пагинацию\n    # return await paginate(session, select(model))   # TODO может быть ошибка\n@async_integrations_timer\nasync def create(session: AsyncSession, data: Any, model: ModelT) -> ModelT:",
         "detail": "webapp.crud.crud",
         "documentation": {}
     },
@@ -3984,7 +3937,7 @@
         "kind": 6,
         "importPath": "webapp.schema.recipe",
         "description": "webapp.schema.recipe",
-        "peekOfCode": "class RecipeIngredient(BaseModel):\n    ingredient: str\nclass RecipeUser(BaseModel):\n    username: str\nclass RecipeId(BaseModel):\n    id: int\nclass RecipeResponse(BaseModel):\n    id: int\n    title: str\nclass RecipesResponse(BaseModel):",
+        "peekOfCode": "class RecipeIngredient(BaseModel):\n    ingredient: str\nclass RecipeUser(BaseModel):\n    username: str\nclass RecipeId(BaseModel):\n    id: int\nclass RecipeResponse(BaseModel):\n    id: int\n    title: str\n    likes: int",
         "detail": "webapp.schema.recipe",
         "documentation": {}
     },
@@ -3993,7 +3946,7 @@
         "kind": 6,
         "importPath": "webapp.schema.recipe",
         "description": "webapp.schema.recipe",
-        "peekOfCode": "class RecipeUser(BaseModel):\n    username: str\nclass RecipeId(BaseModel):\n    id: int\nclass RecipeResponse(BaseModel):\n    id: int\n    title: str\nclass RecipesResponse(BaseModel):\n    recipes: List[RecipeResponse]",
+        "peekOfCode": "class RecipeUser(BaseModel):\n    username: str\nclass RecipeId(BaseModel):\n    id: int\nclass RecipeResponse(BaseModel):\n    id: int\n    title: str\n    likes: int\nclass RecipesResponse(BaseModel):\n    recipes: List[RecipeResponse]",
         "detail": "webapp.schema.recipe",
         "documentation": {}
     },
@@ -4002,7 +3955,7 @@
         "kind": 6,
         "importPath": "webapp.schema.recipe",
         "description": "webapp.schema.recipe",
-        "peekOfCode": "class RecipeId(BaseModel):\n    id: int\nclass RecipeResponse(BaseModel):\n    id: int\n    title: str\nclass RecipesResponse(BaseModel):\n    recipes: List[RecipeResponse]",
+        "peekOfCode": "class RecipeId(BaseModel):\n    id: int\nclass RecipeResponse(BaseModel):\n    id: int\n    title: str\n    likes: int\nclass RecipesResponse(BaseModel):\n    recipes: List[RecipeResponse]",
         "detail": "webapp.schema.recipe",
         "documentation": {}
     },
@@ -4011,7 +3964,7 @@
         "kind": 6,
         "importPath": "webapp.schema.recipe",
         "description": "webapp.schema.recipe",
-        "peekOfCode": "class RecipeResponse(BaseModel):\n    id: int\n    title: str\nclass RecipesResponse(BaseModel):\n    recipes: List[RecipeResponse]",
+        "peekOfCode": "class RecipeResponse(BaseModel):\n    id: int\n    title: str\n    likes: int\nclass RecipesResponse(BaseModel):\n    recipes: List[RecipeResponse]",
         "detail": "webapp.schema.recipe",
         "documentation": {}
     },
@@ -4155,7 +4108,7 @@
         "kind": 2,
         "importPath": "webapp.main",
         "description": "webapp.main",
-        "peekOfCode": "def create_app() -> FastAPI:\n    app = FastAPI(docs_url='/swagger', lifespan=lifespan)\n    setup_middleware(app)\n    setup_routers(app)\n    add_pagination(app)\n    return app",
+        "peekOfCode": "def create_app() -> FastAPI:\n    app = FastAPI(docs_url='/swagger', lifespan=lifespan)\n    setup_middleware(app)\n    setup_routers(app)\n    # add_pagination(app)\n    return app",
         "detail": "webapp.main",
         "documentation": {}
     },

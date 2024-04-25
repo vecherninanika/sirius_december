@@ -3,7 +3,7 @@ from typing import AsyncIterator
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi_pagination import add_pagination
+# from fastapi_pagination import add_pagination
 
 from webapp.api.user.router import auth_router
 from webapp.api.ingredient.router import ingredient_router
@@ -50,6 +50,6 @@ def create_app() -> FastAPI:
 
     setup_middleware(app)
     setup_routers(app)
-    add_pagination(app)
+    # add_pagination(app)
 
     return app

@@ -1,7 +1,7 @@
 from fastapi import Depends
 from fastapi.responses import ORJSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from fastapi_pagination import paginate
+# from fastapi_pagination import paginate
 
 from webapp.api.recipe.router import recipe_router
 from webapp.crud.get_ingredient_recipe import get_ingredient_recipe

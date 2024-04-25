@@ -12,13 +12,10 @@
 ### Authorization
 
 - Register \
-curl -X POST http://127.0.0.1:8000/auth/register -H "Content-Type: application/json" -d '{"username": "new", "password": "new"}'
-
-NOT FOUND
-whaaaaaat?!
+curl -X POST http://127.0.0.1:8000/auth/register -H "Content-Type: application/json" -d '{"username": "new", "code": 123456}'
 
 - Login \
-curl -X POST http://127.0.0.1:8000/auth/login -H "Content-Type: application/json" -d '{"username": "new user", "password": "new"}'
+curl -X POST http://127.0.0.1:8000/auth/login -H "Content-Type: application/json" -d '{"username": "new user", "code": 123456}'
 
 - Info \
 curl -X POST http://127.0.0.1:8000/auth/info
@@ -30,6 +27,8 @@ curl -X POST http://127.0.0.1:8000/auth/delete_user/1 -H "Authorization: Bearer 
 curl -X POST http://127.0.0.1:8000/auth/update_user/1 -H "Content-Type: application/json" -d '{"username": "new", "password": "new"}'
 
 "/code/webapp/crud/crud.py   'NoneType' object is not subscriptable
+
+Все возвращает 404.
 
 
 ### Ingredient
@@ -43,8 +42,20 @@ curl -X GET http://127.0.0.1:8000/ingredient/read -H "Content-Type: application/
 - Update \
 curl -X POST http://127.0.0.1:8000/ingredient/update/1 -H "Content-Type: application/json" -d '{"title": "newt"}'
 
+File "/code/webapp/crud/crud.py", line 51, in update
+web                   |     await session.execute(update(model).where(model.id == id_).values(**data_dict))
+web                   |                           ^^^^^^^^^^^^^^^^^^^
+web                   | AttributeError: 'coroutine' object has no attribute 'where'
+
+
 - Delete \
 curl -X POST http://127.0.0.1:8000/ingredient/delete/1 -H "Content-Type: application/json"
+
+File "/code/webapp/crud/crud.py", line 41, in delete
+web                   |     await session.execute(delete(model).where(model.id == id_).returning(model.id))
+web                   |                           ^^^^^^^^^^^^^^^^^^^
+web                   | AttributeError: 'coroutine' object has no attribute 'where'
+
 
 - Read all \
 curl -X GET http://127.0.0.1:8000/ingredient/read_all -H "Content-Type: application/json"
@@ -53,7 +64,7 @@ curl -X GET http://127.0.0.1:8000/ingredient/read_all -H "Content-Type: applicat
 ### Recipe
 
 - Create \
-curl -X POST http://127.0.0.1:8000/recipe/create -H "Content-Type: application/json" -d '{"title": "new recip", "ingredients": ["Water", "Pasta"]}'
+curl -X POST http://127.0.0.1:8000/recipe/create -H "Content-Type: application/json" -d '{"title": "new recipe", "ingredients": ["Water", "Pasta"]}'
 
 - Read \
 curl -X GET http://127.0.0.1:8000/recipe/read -H "Content-Type: application/json" -d '{"title": "new recipe"}'
@@ -70,3 +81,31 @@ curl -X POST http://127.0.0.1:8000/recipe/delete/1 -H "Content-Type: application
 - Read all \
 curl -X GET http://127.0.0.1:8000/recipe/read_all -H "Content-Type: application/json"
 
+- Find by ingredient \
+curl -X GET http://127.0.0.1:8000/recipe/find_by_ingredient -H "Content-Type: application/json" -d '{"ingredient": "Pasta"}'
+
+не работает 
+
+- Read popular \
+curl -X GET http://127.0.0.1:8000/recipe/read_popular -H "Content-Type: application/json"
+
+404
+
+- Read user recipes \
+curl -X GET http://127.0.0.1:8000/recipe/read_user_recipes/1 -H "Content-Type: application/json"
+
+404
+
+- Add user \
+curl -X GET http://127.0.0.1:8000/recipe/add_user/1 -H "Content-Type: application/json" -d '{"username": "new"}'
+
+404 но я не знаю есть ли такой юзер
+
+
+
+fixture не работают
+update и delete не работают
+
+Потом:
+попробовать пагинацию
+метрики

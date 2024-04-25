@@ -38,6 +38,7 @@ class RecipeId(BaseModel):
 class RecipeResponse(BaseModel):
     id: int
     title: str
+    likes: int
 
 
 class RecipesResponse(BaseModel):
