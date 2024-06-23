@@ -59,8 +59,6 @@ curl -X GET http://127.0.0.1:8000/recipe/read -H "Content-Type: application/json
 - Update \
 curl -X POST http://127.0.0.1:8000/recipe/update/1 -H "Content-Type: application/json" -d '{"title": "newt"}'
 
-null value in column "likes" of relation "recipe" violates not-null constraint
-
 - Add ingredient \
 curl -X POST http://127.0.0.1:8000/recipe/add_ingredient/1 -H "Content-Type: application/json" -d '{"ingredient": "Water"}'
 
@@ -78,12 +76,3 @@ curl -X GET http://127.0.0.1:8000/recipe/read_popular -H "Content-Type: applicat
 
 - Read user recipes \
 curl -X GET http://127.0.0.1:8000/recipe/read_user_recipes/1 -H "Content-Type: application/json"
-
-
-Метрики:
-На кол-во полученных запросов в разрезе каждой ручки.
-На кол-во ошибок по каждой ручке
-На кол-во отправленных запросов
-Время выполнения каждой ручки в среднем (гистограмма) -Время выполнения всех интеграционных методов (запросы в бд, редис и тп (гистограмма)
-
-пагинация
