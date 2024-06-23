@@ -22,7 +22,7 @@ async def read_ingredient(
     ingredient = await get_ingredient(session, body)
 
     if ingredient is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'Ingredient "{body.title}" does not exist')
 
     return ORJSONResponse({'id': ingredient.id, 'title': ingredient.title})
 

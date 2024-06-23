@@ -12,4 +12,3 @@ class IngredientToRecipe(Base):
     ingredient_id: Mapped[int] = mapped_column(Integer, ForeignKey(f"{DEFAULT_SCHEMA}.ingredient.id"))
 
     recipe_id: Mapped[int] = mapped_column(Integer, ForeignKey(f"{DEFAULT_SCHEMA}.recipe.id"))
-

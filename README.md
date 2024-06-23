@@ -12,10 +12,10 @@
 ### Authorization
 
 - Register \
-curl -X POST http://127.0.0.1:8000/auth/register -H "Content-Type: application/json" -d '{"username": "new", "code": 123456}'
+curl -X POST http://127.0.0.1:8000/auth/register -H "Content-Type: application/json" -d '{"username": "new", "code": 12345}'
 
 - Login \
-curl -X POST http://127.0.0.1:8000/auth/login -H "Content-Type: application/json" -d '{"username": "new user", "code": 123456}'
+curl -X POST http://127.0.0.1:8000/auth/login -H "Content-Type: application/json" -d '{"username": "testt user", "code": 123456}'
 
 - Info \
 curl -X POST http://127.0.0.1:8000/auth/info
@@ -26,9 +26,8 @@ curl -X POST http://127.0.0.1:8000/auth/delete_user/1 -H "Authorization: Bearer 
 - Update \
 curl -X POST http://127.0.0.1:8000/auth/update_user/1 -H "Content-Type: application/json" -d '{"username": "new", "password": "new"}'
 
-"/code/webapp/crud/crud.py   'NoneType' object is not subscriptable
-
-Все возвращает 404.
+- Read all \
+curl -X GET http://127.0.0.1:8000/auth/read_all -H "Content-Type: application/json"
 
 
 ### Ingredient
@@ -42,20 +41,8 @@ curl -X GET http://127.0.0.1:8000/ingredient/read -H "Content-Type: application/
 - Update \
 curl -X POST http://127.0.0.1:8000/ingredient/update/1 -H "Content-Type: application/json" -d '{"title": "newt"}'
 
-File "/code/webapp/crud/crud.py", line 51, in update
-web                   |     await session.execute(update(model).where(model.id == id_).values(**data_dict))
-web                   |                           ^^^^^^^^^^^^^^^^^^^
-web                   | AttributeError: 'coroutine' object has no attribute 'where'
-
-
 - Delete \
 curl -X POST http://127.0.0.1:8000/ingredient/delete/1 -H "Content-Type: application/json"
-
-File "/code/webapp/crud/crud.py", line 41, in delete
-web                   |     await session.execute(delete(model).where(model.id == id_).returning(model.id))
-web                   |                           ^^^^^^^^^^^^^^^^^^^
-web                   | AttributeError: 'coroutine' object has no attribute 'where'
-
 
 - Read all \
 curl -X GET http://127.0.0.1:8000/ingredient/read_all -H "Content-Type: application/json"
@@ -64,13 +51,15 @@ curl -X GET http://127.0.0.1:8000/ingredient/read_all -H "Content-Type: applicat
 ### Recipe
 
 - Create \
-curl -X POST http://127.0.0.1:8000/recipe/create -H "Content-Type: application/json" -d '{"title": "new recipe", "ingredients": ["Water", "Pasta"]}'
+curl -X POST http://127.0.0.1:8000/recipe/create -H "Content-Type: application/json" -d '{"title": "new recipee", "ingredients": ["Water", "Pasta"], "username": 1319721928}'
 
 - Read \
-curl -X GET http://127.0.0.1:8000/recipe/read -H "Content-Type: application/json" -d '{"title": "new recipe"}'
+curl -X GET http://127.0.0.1:8000/recipe/read -H "Content-Type: application/json" -d '{"title": "new recipee"}'
 
 - Update \
 curl -X POST http://127.0.0.1:8000/recipe/update/1 -H "Content-Type: application/json" -d '{"title": "newt"}'
+
+null value in column "likes" of relation "recipe" violates not-null constraint
 
 - Add ingredient \
 curl -X POST http://127.0.0.1:8000/recipe/add_ingredient/1 -H "Content-Type: application/json" -d '{"ingredient": "Water"}'
@@ -82,30 +71,19 @@ curl -X POST http://127.0.0.1:8000/recipe/delete/1 -H "Content-Type: application
 curl -X GET http://127.0.0.1:8000/recipe/read_all -H "Content-Type: application/json"
 
 - Find by ingredient \
-curl -X GET http://127.0.0.1:8000/recipe/find_by_ingredient -H "Content-Type: application/json" -d '{"ingredient": "Pasta"}'
-
-не работает 
+curl -X GET http://127.0.0.1:8000/recipe/find_by_ingredient -H "Content-Type: application/json" -d '{"title": "Tomato"}'
 
 - Read popular \
 curl -X GET http://127.0.0.1:8000/recipe/read_popular -H "Content-Type: application/json"
 
-404
-
 - Read user recipes \
 curl -X GET http://127.0.0.1:8000/recipe/read_user_recipes/1 -H "Content-Type: application/json"
 
-404
 
-- Add user \
-curl -X GET http://127.0.0.1:8000/recipe/add_user/1 -H "Content-Type: application/json" -d '{"username": "new"}'
+Метрики:
+На кол-во полученных запросов в разрезе каждой ручки.
+На кол-во ошибок по каждой ручке
+На кол-во отправленных запросов
+Время выполнения каждой ручки в среднем (гистограмма) -Время выполнения всех интеграционных методов (запросы в бд, редис и тп (гистограмма)
 
-404 но я не знаю есть ли такой юзер
-
-
-
-fixture не работают
-update и delete не работают
-
-Потом:
-попробовать пагинацию
-метрики
+пагинация

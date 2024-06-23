@@ -13,6 +13,7 @@ from webapp.models.sirius.recipe import Recipe
 from webapp.schema.ingredient import IngredientData
 from webapp.schema.ingredient_to_recipe import AssociationData
 from webapp.schema.recipe import RecipeIngredient, RecipeResponse
+from webapp.utils.recipe.ingredients_for_recipe import get_ingredients_for_recipe
 
 
 @recipe_router.post(
@@ -32,11 +33,19 @@ async def add_ingredient(
     recipe = await get(session, recipe_id, Recipe)
 
     if recipe is None:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail=f'Recipe {body.recipe} does not exist'
-        )
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'Recipe {body.recipe} does not exist')
 
     data = AssociationData(ingredient_id=ingredient.id, recipe_id=recipe.id)
     await create(session, data, IngredientToRecipe)
 
-    return ORJSONResponse({'id': recipe.id, 'title': recipe.title})
+    ingredients = await get_ingredients_for_recipe(session, recipe)
+
+    return ORJSONResponse(
+        {
+            'id': recipe.id,
+            'title': recipe.title,
+            'likes': recipe.likes,
+            'user_id': recipe.user_id,
+            'ingredients': ingredients,
+        }
+    )

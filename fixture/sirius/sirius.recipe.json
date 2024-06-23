@@ -1,6 +1,7 @@
 [
     {
-        "title": "Salad"
+        "title": "Salad",
+        "user_id": 1
     },
     {
         "title": "Soup"

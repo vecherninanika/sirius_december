@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, String
+from sqlalchemy import Integer, String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column
 
 from webapp.models.meta import DEFAULT_SCHEMA, Base
@@ -13,3 +13,4 @@ class Recipe(Base):
 
     likes: Mapped[int] = mapped_column(Integer, default=0)
 
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey(f'{DEFAULT_SCHEMA}.user.id'), nullable=True)

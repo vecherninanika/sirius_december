@@ -1,11 +1,11 @@
 from sqlalchemy import select, Sequence
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from webapp.metrics import async_integrations_timer
+# from webapp.metrics import async_integrations_timer
 from webapp.models.sirius.ingredient_to_recipe import IngredientToRecipe
 
 
-@async_integrations_timer
+# @async_integrations_timer
 async def get_ingredient_recipe(
     session: AsyncSession, ingredient_id: int = None, recipe_id: int = None
 ) -> Sequence[IngredientToRecipe] | None:

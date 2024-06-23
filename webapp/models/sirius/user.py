@@ -9,6 +9,6 @@ class User(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
 
-    username: Mapped[int] = mapped_column(String, unique=True)
+    username: Mapped[int] = mapped_column(Integer, unique=True)
 
     code: Mapped[int] = mapped_column(Integer, unique=True)

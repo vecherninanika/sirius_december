@@ -17,9 +17,9 @@ from webapp.schema.ingredient import IngredientData, IngredientResponse
 async def update_ingredient(
     ingredient_id: int, body: IngredientData, session: AsyncSession = Depends(get_session)
 ) -> ORJSONResponse:
-    updated = await update(session, ingredient_id, body, Ingredient)
+    updated = await update(session, ingredient_id, body.dict(), Ingredient)
 
     if updated.id is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'Ingredient "{body.title}" does not exist')
 
     return ORJSONResponse({'id': updated.id, 'title': updated.title})

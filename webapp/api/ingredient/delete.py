@@ -18,13 +18,15 @@ from webapp.schema.ingredient import IngredientData
 )
 async def delete_ingredient(ingredient_id: int, session: AsyncSession = Depends(get_session)) -> ORJSONResponse:
 
-    association_id = await get_ingredient_recipe(session, ingredient_id)
-    if association_id:
-        await delete(session, association_id, IngredientToRecipe)
+    association_objects = await get_ingredient_recipe(session, ingredient_id)
+    id_ = association_objects[0].id
+
+    if id_:
+        await delete(session, id_, IngredientToRecipe)
 
     deleted_id = await delete(session, ingredient_id, Ingredient)
 
     if deleted_id is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'Ingredient does not exist')
 
     return ORJSONResponse({'id': deleted_id})
